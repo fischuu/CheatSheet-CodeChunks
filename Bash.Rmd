@@ -1,0 +1,30 @@
+---
+title: "Bash"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# File handling
+
+## Batch renaming for many files
+
+```{bash}
+# First do a testrun, if the mv command looks correct! For a live run, remove the echo in fron of mv
+for i in *fastq.gz; do echo mv "$i" "${i/L001/L003}"; done
+```
+
+Here, `${i/L001/L003}` replaces the first occurrence of L001 with L003`
+
+## Moving files to Allas
+For movinf files to allas, I use the swift protocol. To copy files, I use those commands:
+
+For that, I first configure allas for the suited project and then navigacte into the folder which files I would like to add to the bucket and then use rclone to copy the files
+
+```
+module load allas
+allas-conf
+rclone copy . allas:MC_RNASeq_Novaseq --progress
+```
